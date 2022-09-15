@@ -1,1 +1,1 @@
-​
+1.Sorting approach: Create a 2D array of nums[i] and i, sort the 2D array (we are using the 2D array and not nums because we need to keep track of the indexes of the elements. Keeping a hashmap here will not work cause hashmap overrides duplicate keys.
