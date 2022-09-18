@@ -1,5 +1,6 @@
 class Solution {
     
+    //MEMOIZATION APPROACH
     public int rec(int n,int []dp){
         if(n<=2){
             return n;
