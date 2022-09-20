@@ -1,0 +1,2 @@
+1. Cycle detection : Use slow and fast pointer , if at any point they are equal that means there is a cycle.
+2. Cycle finding: Start another pointer at head and move the pointer at slow, the point at which they are equal is the cycle.
