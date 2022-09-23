@@ -18,26 +18,27 @@ class Node {
 */
 
 class Solution {
+    public void dfs(Node root,List<Integer> ans){
+        if(root==null){
+            return ;
+        }
+        ans.add(root.val);
+        
+        for(int i=0;i<root.children.size();i++){
+            
+            //leftmost node is dfs first
+            dfs(root.children.get(i),ans);
+        }
+    }
+    
     public List<Integer> preorder(Node root) {
         List<Integer> preordertraversal=new ArrayList<>();
         
         if(root==null){
             return preordertraversal;
         }
+        dfs(root,preordertraversal);
         
-        Stack<Node> s=new Stack();
-        s.push(root);
-        
-        while(!s.isEmpty()){
-            Node current=s.pop();
-            preordertraversal.add(current.val);
-            
-            for(int i=current.children.size()-1;i>=0;i--){
-                if(current.children.get(i)!=null){
-                    s.push(current.children.get(i));
-                }
-            }
-        }
         
         return preordertraversal;
     }
