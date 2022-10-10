@@ -1,1 +1,2 @@
-​
+1. Check the first half of the array and replace any non 'a' with 'a', no need to check second half because its the same as first.
+2. If the first half contains only 'a' , change the last letter of the string to 'b' to keep lexicograhically smallest.
