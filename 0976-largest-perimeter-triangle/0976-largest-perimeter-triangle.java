@@ -4,14 +4,12 @@ class Solution {
         
         Arrays.sort(nums);
         
-        for(int i=2;i<nums.length;i++){
-            if(nums[i-2]+nums[i-1]>nums[i]){
-                n1=nums[i-1];
-                n2=nums[i-2];
-                n3=nums[i];
-            }
+        for(int i=nums.length-1;i>=2;i--){
+           if(nums[i]<nums[i-1]+nums[i-2]){
+               return nums[i]+nums[i-1]+nums[i-2];
+           }
         }
         
-        return n1+n2+n3;
+        return 0;
     }
 }
