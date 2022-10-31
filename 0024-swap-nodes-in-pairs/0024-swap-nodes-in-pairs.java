@@ -10,27 +10,26 @@
  */
 class Solution {
     public ListNode swapPairs(ListNode head) {
-        if(head==null ||head.next==null){
+        if(head ==null || head.next==null){
             return head;
         }
         
-        ListNode current=new ListNode(0);    
-        current.next=head;
-        //newhead will be returned at end
-        ListNode newhead=current;
+        ListNode dummy=new ListNode(0);
+        dummy.next=head;
+        ListNode current=dummy;
         
-        while(current.next!=null && current.next.next!=null )   // for even and odd lists respectively
-        {
+        while(current.next!=null && current.next.next!=null){
             ListNode first=current.next;
             ListNode second=current.next.next;
             
             first.next=second.next;
-            second.next=first;            
-            current.next=second;
+            second.next=first;
+            current.next=second;   //for the previous link
             
-            current=current.next.next;   //it wont be null cause otherwise we wouldnt be in this loop
+            current=current.next.next;
         }
         
-        return newhead.next;
+        return dummy.next;
+        
     }
 }
