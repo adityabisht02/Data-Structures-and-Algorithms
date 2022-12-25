@@ -1,47 +1,41 @@
 class Solution {
     
-    public void bfs(int isConnected[][],int visited[],int node){
- 
+    public void bfs(int isConnected[][],boolean visited[],int node){
         Queue<Integer> q=new LinkedList<>();
-        q.offer(node);
+        q.add(node);
         
         while(!q.isEmpty()){
-            int current=q.poll();
-            visited[current]=1;
+            int currentNode=q.poll();
+            visited[currentNode]=true;
+            //now we traverse the adjacency list to add all of currentnodes connected nodes to queue
+            for(int i=0;i<isConnected[0].length;i++){
+                if(!visited[i] && isConnected[currentNode][i]==1){
+                    q.add(i);
+                    visited[i]=true;
+                }
+            }
             
-           for(int i=0;i<isConnected[0].length;i++){
-               if(isConnected[current][i]!=0 && visited[i]!=1){
-                   q.offer(i);
-                   visited[i]=1;
-               }
-           }
         }
-        
-        
     }
     
     public int findCircleNum(int[][] isConnected) {
+        int numberOfNodes=isConnected[0].length;
         
-        int i,j,provincecount=0;
-        int visited[]=new int[isConnected.length];
+        boolean visited[]=new boolean[numberOfNodes];
+        int numberOfProvinces=0;
         
-        for(i=0;i<isConnected.length;i++){
-            
-            if(visited[i]==1){
+        for(int i=0;i<isConnected.length;i++){
+            if(visited[i]){
                 continue;
             }
-            for(j=0;j<isConnected[0].length;j++){
-                
-                //if not visited and is connected
-                if(visited[j]==0 && isConnected[i][j]==1){
-                    //everytime u do a bfs u complete one connected component
-                     bfs(isConnected,visited,j);
-                    provincecount++;
+            
+            for(int j=0;j<isConnected[0].length;j++){
+                if(!visited[j] && isConnected[i][j]==1){
+                    bfs(isConnected,visited,j);
+                    numberOfProvinces++;
                 }
-               
             }
         }
-        
-        return provincecount;
+        return numberOfProvinces;
     }
 }
