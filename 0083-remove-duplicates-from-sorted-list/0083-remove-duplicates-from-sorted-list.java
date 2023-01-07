@@ -11,32 +11,24 @@
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         if(head==null){
-            return head;
+            return null;
         }
-        
-        HashSet<Integer> set=new HashSet();
-        
         ListNode p1=head;
         ListNode p2=head.next;
         
-        //since list is sorted we need to check adjacent values
         while(p2!=null){
-            
             if(p1.val==p2.val){
                 p1.next=p2.next;
                 p2=p1.next;
-                continue;
+               
             }
-            
-            p1=p1.next;
-            if(p2!=null){
-                  p2=p2.next;
+            else if(p2!=null){
+                 p1=p1.next;
+            p2=p2.next;
             }
-          
+           
         }
         
         return head;
-        
-        
     }
 }
