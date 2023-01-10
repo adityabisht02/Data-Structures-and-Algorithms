@@ -1,22 +1,23 @@
 class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> rowlist=new ArrayList<>();
-        List<Integer> row,pre=null;
+        List<Integer> row;
+        List<Integer> previousRow;
+        int temp;
         
         for(int i=0;i<numRows;i++){
             row=new ArrayList<>();
             for(int j=0;j<=i;j++){
-                //if j is first or last element of row
                 if(j==0 || j==i){
                     row.add(1);
                 }
                 else{
-                    int temp=pre.get(j-1)+pre.get(j);
-                    row.add(temp);
+                    previousRow=rowlist.get(i-1);
+                    temp=previousRow.get(j)+ previousRow.get(j-1);
+                    row.add(temp);                    
                 }
             }
             rowlist.add(row);
-            pre=row;
         }
         
         return rowlist;
