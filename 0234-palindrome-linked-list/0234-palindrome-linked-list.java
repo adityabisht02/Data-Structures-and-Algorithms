@@ -9,21 +9,50 @@
  * }
  */
 class Solution {
-
     public boolean isPalindrome(ListNode head) {
-        List<Integer> list=new ArrayList<>();
-        ListNode ptr=head;
         
-        while(ptr!=null){
-            list.add(ptr.val);
-            ptr=ptr.next;
+        //first use slow and fast pointer to find middle
+        ListNode slow=head,fast=head;
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
         }
         
-        for(int i=0;i<list.size()/2;i++){
-            if(list.get(i)!=list.get(list.size()-i-1)){
-                return false;
+        //reverse the list till middle(till slow pointer)
+        ListNode current=head.next;
+        ListNode prev=null;
+        
+        while(head!=slow){
+            head.next=prev;
+            prev=head;
+            head=current;
+            if(current!=null){
+                current=current.next;
             }
         }
-return true;
+        
+        
+        //now head of first list is prev
+        
+        //take head of the second list as slow if even list and slow.next if odd list
+        
+        //if odd list, slow.next will be second head
+        if(fast!=null){
+            if(fast.next==null){
+            slow=slow.next;
+        }
+        }
+        
+        
+        //now traverse prev and slow heads and compare
+        while(prev!=null && slow!=null){
+            if(prev.val!=slow.val){
+                return false;
+            }
+            prev=prev.next;
+            slow=slow.next;
+        }
+        
+        return true;
     }
 }
