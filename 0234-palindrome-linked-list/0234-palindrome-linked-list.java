@@ -9,66 +9,21 @@
  * }
  */
 class Solution {
-    public ListNode reverse(ListNode head,ListNode slow){
-        ListNode prev=null;
+
+    public boolean isPalindrome(ListNode head) {
+        List<Integer> list=new ArrayList<>();
         ListNode ptr=head;
-        ListNode next=head.next;
-           
-        while(prev!=slow){
-            ptr.next=prev;
-            prev=ptr;
-            ptr=next;
-            
-            next=next.next;
+        
+        while(ptr!=null){
+            list.add(ptr.val);
+            ptr=ptr.next;
         }
         
-        return prev;
-    }
-    public boolean checkLists(ListNode ptr1,ListNode ptr2){
-        while(ptr1!=null && ptr2!=null){
-            if(ptr1.val!=ptr2.val){
+        for(int i=0;i<list.size()/2;i++){
+            if(list.get(i)!=list.get(list.size()-i-1)){
                 return false;
             }
-            ptr1=ptr1.next;
-            ptr2=ptr2.next;
         }
-        
-        return (ptr1==null && ptr2==null);
-    }
-    
-    public boolean isPalindrome(ListNode head) {
-        
-        //if single node
-        if(head.next==null){
-            return true;
-        }
-        
-        //find middle node of the linked list
-        ListNode slow=head,fast=head;
-        
-        while(fast!=null && fast.next!=null){
-            fast=fast.next.next;
-            if(fast==null || fast.next==null){
-                break;
-            }
-            slow=slow.next;
-        }
-        
-        ListNode temp;
-        //even nodes
-        if(fast==null){
-            temp=slow.next;
-        }
-        //odd nodes
-        else{
-            temp=slow.next.next;
-        }
-        
-        //reverse till slow
-        slow=reverse(head,slow);
-     
-        System.out.println(slow.val);
-        
-        return checkLists(temp,slow);
+return true;
     }
 }
