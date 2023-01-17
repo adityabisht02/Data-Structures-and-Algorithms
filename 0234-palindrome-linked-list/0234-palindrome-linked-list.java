@@ -45,7 +45,7 @@ class Solution {
         
         
         //now traverse prev and slow heads and compare
-        while(prev!=null && slow!=null){
+        while(prev!=null){
             if(prev.val!=slow.val){
                 return false;
             }
