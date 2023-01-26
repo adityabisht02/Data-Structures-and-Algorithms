@@ -1,30 +1,26 @@
 class Solution {
     public String longestCommonPrefix(String[] strs) {
-        int index=0,i;
-        int size=Integer.MAX_VALUE;
         String prefix="";
+        int minlength=Integer.MAX_VALUE,index=0,flag;
         
-        //first find smallest string in array
-        for(i=0;i<strs.length;i++){
-            if(strs[i].length()<size){
-                size=strs[i].length();
+        //first find smallest string
+        for(int i=0;i<strs.length;i++){
+            if(strs[i].length()<minlength){
+                minlength=strs[i].length();
             }
         }
         
-        while(index<size){
-            //for every index check the character at that index
+        while(index<minlength){
             char temp=strs[0].charAt(index);
-            
-            for(i=0;i<strs.length;i++){
-                if(strs[i].charAt(index)!=temp){
-                    return prefix;
-                }
+            for(int i=0;i<strs.length;i++){
+            if(strs[i].charAt(index)!=temp){
+                return prefix;
             }
+        }
             prefix+=temp;
             index++;
         }
         
         return prefix;
-        
     }
 }
