@@ -1,20 +1,33 @@
 class Solution {
     public void rotate(int[][] matrix) {
-        int m=matrix.length,n=matrix[0].length;
-        int ans[][]=new int[m][n];
-        int index=0;
+       //DO TRANSPOSE AND THEN ROWISE SWITCHING
+        //IN PLACE TRANSPOSE CAUSE ROWS AND COLUMNS ARE EQUAL
         
-        for(int c=0;c<n;c++){
-            for(int r=m-1;r>=0;r--){
-                ans[index/m][index%m]=matrix[r][c];
-                index++;
+        
+        //transpose loop
+        for(int i=0;i<matrix.length;i++){
+            for(int j=i;j<matrix[0].length;j++){  //j equal to i to prevent repeated swapping of already swapped nodes
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[j][i];
+                matrix[j][i]=temp;
             }
         }
         
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                matrix[i][j]=ans[i][j];
+        
+        //reversing rowwise
+        for(int i=0;i<matrix.length;i++){
+            //inside every row we reverse rows using two pointers
+            int low=0,high=matrix[i].length-1;
+            
+            while(low<high){
+                int temp=matrix[i][low];
+                matrix[i][low]=matrix[i][high];
+                matrix[i][high]=temp;
+                low++;
+                high--;
+                
             }
         }
+        
     }
 }
