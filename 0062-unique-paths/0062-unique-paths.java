@@ -1,24 +1,22 @@
 class Solution {
-    public int rec(int i,int j,int m,int n,int dp[][]){
-        //path found
-        if(i==m-1 && j==n-1){
-            return 1;
-        }
-        //out of bounds of matrix
-        if(i>=m || j>=n){
+    
+    public int dfs(int m,int n,int r,int c,int dp[][]){
+        if(r>=m || c>=n){
             return 0;
         }
-        //check if dp array already contains value
-        if(dp[i][j]!=0){
-            return dp[i][j];
+        if(r==m-1 && c==n-1){
+            return 1;
         }
-        return dp[i][j]=rec(i+1,j,m,n,dp)+rec(i,j+1,m,n,dp);
+        if(dp[r][c]!=0){
+            return dp[r][c];
+        }        
+        return dp[r][c]=dfs(m,n,r+1,c,dp)+dfs(m,n,r,c+1,dp);
         
-    }    
+    }
     public int uniquePaths(int m, int n) {
-        
         int dp[][]=new int[m][n];
         
-        return rec(0,0,m,n,dp);
+        int paths=dfs(m,n,0,0,dp);
+        return paths;
     }
 }
