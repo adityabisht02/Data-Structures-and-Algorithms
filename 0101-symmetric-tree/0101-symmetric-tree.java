@@ -15,19 +15,18 @@
  */
 class Solution {
     public boolean check(TreeNode p1,TreeNode p2){
-        
-        if(p1==null && p2!=null || p2==null && p1!=null){
+        if((p1==null && p2!=null) || (p2==null && p1!=null)){
             return false;
         }
         if(p1==null && p2==null){
             return true;
         }
-        
-        return (p1.val==p2.val)&&(check(p1.left,p2.right))&& check(p1.right,p2.left);
-        
+        if(p1.val!=p2.val){
+            return false;
+        }
+        return check(p1.left,p2.right) && check(p1.right,p2.left);
         
     }
-    
     public boolean isSymmetric(TreeNode root) {
         if(root==null){
             return true;
