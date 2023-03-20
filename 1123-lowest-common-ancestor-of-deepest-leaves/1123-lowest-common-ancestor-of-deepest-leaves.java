@@ -15,20 +15,23 @@
  */
 class Solution {
     public TreeNode lcaDeepestLeaves(TreeNode root) {
-        if(getHeight(root.left)==getHeight(root.right)){
+        int leftHeight=height(root.left);
+        int right=height(root.right);
+        
+        if(leftHeight==right){
             return root;
         }
-        
-        if(getHeight(root.left)>getHeight(root.right)){
+        else if(leftHeight>right){
             return lcaDeepestLeaves(root.left);
         }
         
+        
         return lcaDeepestLeaves(root.right);
     }
-    public int getHeight(TreeNode root){
+    public int height(TreeNode root){
         if(root==null){
             return 0;
         }
-        return 1+ Math.max(getHeight(root.left),getHeight(root.right));
+        return 1+ Math.max(height(root.left),height(root.right));
     }
 }
