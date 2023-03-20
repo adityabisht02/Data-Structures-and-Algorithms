@@ -4,6 +4,13 @@ class Solution {
         int left=0,right=matrix[0].length-1,bottom=matrix.length-1,top=0;
         List<Integer> ans=new ArrayList<>();
         int n=matrix.length*matrix[0].length;
+        
+        
+        //in the loop below if top>bottom or left>right break immediately dont let other for loops execute cause it may lead to addition of \
+        // extra elements
+        
+        
+        
         while(true){
             
             //left to right
