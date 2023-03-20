@@ -14,6 +14,8 @@
  * }
  */
 class Solution {
+    HashMap<TreeNode,Integer> map=new HashMap<>();
+    
     public TreeNode lcaDeepestLeaves(TreeNode root) {
         int leftHeight=height(root.left);
         int right=height(root.right);
@@ -32,6 +34,12 @@ class Solution {
         if(root==null){
             return 0;
         }
-        return 1+ Math.max(height(root.left),height(root.right));
+        if(map.containsKey(root)){
+            return map.get(root);
+        }
+        
+        int h=1+ Math.max(height(root.left),height(root.right));
+        map.put(root,h);
+        return h;
     }
 }
