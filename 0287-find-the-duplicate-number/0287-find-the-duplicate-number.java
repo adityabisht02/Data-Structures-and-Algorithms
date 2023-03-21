@@ -1,17 +1,16 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        //use nums as a hash table, put nums[i]=-nums[i] if i doesnt already exist
-        
-        for(int i : nums){
-            int index=Math.abs(i);
-            //if i has already occured before nums[index] will be negative
-            if(nums[index]<0){
-                return index;
+        for(int i=0;i<nums.length;i++){
+            int num=Math.abs(nums[i]);
+            //if element is marked, return element else mark element as visited
+            if(nums[num]<0){
+                return num;
             }
-            nums[index]=-nums[index];
+            else{
+                nums[num]=-nums[num];
+            }
         }
-            
-            
+        
         return -1;
     }
 }
