@@ -1,23 +1,44 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        // 3,4,-1,1
-        //     1,2,3,4,5,6
-        //     0,-1,-2,-3,-4,-5 6    lastindexel=
-        
-        int arr[]=new int[nums.length+1];
+        int num=-1;
         
         for(int i=0;i<nums.length;i++){
-            if(nums[i]>0 && nums[i]<nums.length+1){
-                arr[nums[i]]=1;
+            if(nums[i]>0){
+                num=nums[i];
+                break;
+            }
+        }
+        //if no positive integers in array return 1
+        if(num==-1){
+            return 1;
+        }
+        //else replace all negative integers and 0 with num to take care of negatives
+        
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]<=0){
+                nums[i]=num;
             }
         }
         
-        for(int i=1;i<arr.length;i++){
-            if(arr[i]!=1){
-                return i;
+        //traverse the array and mark positive elements at their (index-1)
+        for(int i=0;i<nums.length;i++){
+            int absval=Math.abs(nums[i]);
+            if(absval>nums.length){
+                continue;
+            }
+            else if(nums[absval-1]>0){
+                nums[absval-1]=-nums[absval-1];
             }
         }
         
+        //now traverse the array and find first missing positive
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>0){
+                return i+1;
+            }
+        }
+        
+        //if all elements covered then return the next element as ans
         return nums.length+1;
     }
 }
