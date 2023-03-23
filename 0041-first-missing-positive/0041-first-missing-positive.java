@@ -1,44 +1,52 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        int num=-1;
+        // get rid of negative numbers and zero by replacing them with an already existing positive in array
+        // traverse array and mark n-1 th index as negative to mark nth element
+        // check if all present , if yes return nums.length+1 else return the missing num
+    
+    int positive=-1;
         
+        //find positive
         for(int i=0;i<nums.length;i++){
             if(nums[i]>0){
-                num=nums[i];
+                positive=nums[i];
                 break;
             }
         }
-        //if no positive integers in array return 1
-        if(num==-1){
+        //if no positive element
+        if(positive==-1){
             return 1;
         }
-        //else replace all negative integers and 0 with num to take care of negatives
         
+        //replace negatives and 0
         for(int i=0;i<nums.length;i++){
             if(nums[i]<=0){
-                nums[i]=num;
+                nums[i]=positive;
             }
         }
         
-        //traverse the array and mark positive elements at their (index-1)
         for(int i=0;i<nums.length;i++){
-            int absval=Math.abs(nums[i]);
-            if(absval>nums.length){
-                continue;
+            //mark at n-1 
+            int markingIndex=Math.abs(nums[i])-1;
+            
+            //if element hasnt been marked and is in array index range
+            if(nums[i]<=nums.length){
+                 if(nums[markingIndex]>0){
+                nums[markingIndex]=-nums[markingIndex];
             }
-            else if(nums[absval-1]>0){
-                nums[absval-1]=-nums[absval-1];
             }
+           
+            
         }
         
-        //now traverse the array and find first missing positive
+        //check indices to see which num is missing
         for(int i=0;i<nums.length;i++){
             if(nums[i]>0){
+                //we marked i-1 for n so return i+1
                 return i+1;
             }
         }
         
-        //if all elements covered then return the next element as ans
         return nums.length+1;
     }
 }
