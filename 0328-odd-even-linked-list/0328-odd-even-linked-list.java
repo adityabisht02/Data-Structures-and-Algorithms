@@ -11,45 +11,19 @@
 class Solution {
     public ListNode oddEvenList(ListNode head) {
         if(head==null){
-            return null;
+            return head;
         }
-        int index=1;
-        ListNode ptr=head;
+        ListNode odd=head,even=head.next,evenHead=head.next;
         
-        ListNode p1=new ListNode(0);
-        ListNode p2=new ListNode(0);
-        
-        ListNode start2=p2;
-        ListNode start1=p1;
-        
-        //traverse the list for odd elements
-        while(ptr!=null){
-            if(index%2 !=0){
-                p1.next=ptr;
-                p1=p1.next;
-                
-            }
-            else{
-                p2.next=ptr;
-                p2=p2.next;
-                 
-            }
-           index++;
-            ptr=ptr.next;
+        while(even!=null && even.next!=null){
+            odd.next=odd.next.next;
+            even.next=even.next.next;
+            odd=odd.next;
+            even=even.next;
         }
         
-         p1.next=start2.next;
-        p2.next=null;
+        odd.next=evenHead;
+        return head;
         
-        ptr=start1.next;
-        while(ptr!=null){
-            System.out.println(ptr.val);
-            ptr=ptr.next;
-        }
-             
-       
-        
-        return start1.next;
-            
     }
 }
