@@ -111,7 +111,9 @@ class GfG {
 
 
 class Solution
-{   static class Pair{
+    
+{
+    static class Pair{
         int column;
         Node node;
         Pair(int column,Node node){
@@ -119,44 +121,43 @@ class Solution
             this.node=node;
         }
     }
-    
     //Function to find the vertical order traversal of Binary Tree.
     static ArrayList <Integer> verticalOrder(Node root)
     {
-          Map<Integer,List<Integer>> map= new TreeMap<>();
-        Queue<Pair> q=new LinkedList<>();
+        Map<Integer,List<Integer>> map=new TreeMap<>();
         
+        Queue<Pair> q=new LinkedList<>();
         q.add(new Pair(0,root));
         
         while(!q.isEmpty()){
             Pair current=q.poll();
-             Node currentNode=current.node;
             int currentcolumn=current.column;
-            
+            Node currentnode=current.node;
             if(map.containsKey(currentcolumn)){
-                map.get(currentcolumn).add(currentNode.data);
-            }
-            else{
+                map.get(currentcolumn).add(currentnode.data);
+            }else{
                 List<Integer> list=new ArrayList<>();
-                list.add(currentNode.data);
+                list.add(currentnode.data);
                 map.put(currentcolumn,list);
             }
             
-           
-            if(currentNode.left!=null){
-                q.add(new Pair(currentcolumn-1,currentNode.left));
+            if(currentnode.left!=null){
+                Pair p=new Pair(currentcolumn-1,currentnode.left);
+                q.add(p);
             }
-            if(currentNode.right!=null){
-                q.add(new Pair(currentcolumn+1,currentNode.right));
+            if(currentnode.right!=null){
+                Pair p=new Pair(currentcolumn+1,currentnode.right);
+                q.add(p);
             }
         }
         
         ArrayList<Integer> ans=new ArrayList<>();
         
         for(Map.Entry<Integer,List<Integer>> entry: map.entrySet()){
-         List<Integer> values=entry.getValue();   
-            for(int i=0;i<values.size();i++){
-                ans.add(values.get(i));
+            List<Integer> list=entry.getValue();
+            
+            for(int i=0;i<list.size();i++){
+                ans.add(list.get(i));
             }
         }
         
