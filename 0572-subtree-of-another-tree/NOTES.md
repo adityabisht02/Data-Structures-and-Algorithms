@@ -1,0 +1,1 @@
+1. Brute force: For every node in tree do same tree logic.
