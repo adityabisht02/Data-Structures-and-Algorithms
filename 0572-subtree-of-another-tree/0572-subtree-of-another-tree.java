@@ -14,29 +14,26 @@
  * }
  */
 class Solution {
-    public boolean isSameTree(TreeNode root,TreeNode sub){
-        if(root==null && sub==null){
+    public boolean dfs(TreeNode root, TreeNode subRoot){
+        if(root==null && subRoot==null){
             return true;
         }
-        if((root==null && sub!=null) || (root!=null && sub==null)){
+        if((root==null && subRoot!=null) || (root!=null && subRoot==null)){
             return false;
         }
-        if(root.val!=sub.val){
+        if(root.val!=subRoot.val){
             return false;
         }
-        
-        return isSameTree(root.left,sub.left) && isSameTree(root.right,sub.right);
+        return dfs(root.left,subRoot.left) && dfs(root.right,subRoot.right);
     }
     
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        //traverse root tree and when u find root==subroot do dfs to check whole subtree
         if(root==null){
             return false;
         }
-        boolean same=isSameTree(root,subRoot);
-        if(same){
-            return true;
-        }
+       boolean ans=dfs(root,subRoot);
         
-        return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot) ;
+        return ans || (isSubtree(root.left,subRoot)) || isSubtree(root.right,subRoot) ;
     }
 }
