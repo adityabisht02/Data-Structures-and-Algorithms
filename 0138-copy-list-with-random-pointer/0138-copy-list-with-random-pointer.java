@@ -15,30 +15,25 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
-        //first traverse the old list and add old and new nodes to a hashmap of oldtonew nodes
-        //then traverse old list again and make connections using nodes in hashmap        
-        
-        Map<Node,Node> oldToNew=new HashMap<Node,Node>();
-        //Node for traversing list
+        Map<Node,Node> map=new HashMap<>();
+        map.put(null,null);
         Node ptr=head;
+        
         while(ptr!=null){
             Node newnode=new Node(ptr.val);
-            //put the old and new node
-            oldToNew.put(ptr,newnode);
+            map.put(ptr,newnode);
             ptr=ptr.next;
         }
-        //need to add null as well
-        oldToNew.put(null,null);
         
-        //traverse again to make connections
         ptr=head;
+        //set pointers
         while(ptr!=null){
-            Node current=oldToNew.get(ptr);
-            current.next=oldToNew.get(ptr.next);
-            current.random=oldToNew.get(ptr.random);
+            Node current=map.get(ptr);
+            current.next=map.get(ptr.next);
+            current.random=map.get(ptr.random);
             ptr=ptr.next;
         }
         
-        return oldToNew.get(head);
+        return map.get(head);
     }
 }
