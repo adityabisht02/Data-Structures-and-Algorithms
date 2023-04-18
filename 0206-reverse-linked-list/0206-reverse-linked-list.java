@@ -10,20 +10,17 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if(head==null){
+        //write base cases
+        if(head==null || head.next==null){
             return head;
         }
-        ListNode prev=null,current=head.next;
+        //go till the end to find the new head and keep returning it through recursion stack
+        ListNode newhead=reverseList(head.next);
         
-        while(head!=null){
-            head.next=prev;
-            prev=head;
-            head=current;
-            if(current!=null){
-                current=current.next;
-            }
-        }
-        
-        return prev;
+        //reverse links
+        head.next.next=head;
+        //to make the end node null keep making head.next=null
+        head.next=null;
+        return newhead;
     }
 }
