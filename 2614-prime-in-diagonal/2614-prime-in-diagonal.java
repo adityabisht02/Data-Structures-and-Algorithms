@@ -1,69 +1,55 @@
 class Solution {
-    public void findAllPrimes(int sieve[]){
-   
-
-        for (int i = 2; i < Math.sqrt(sieve.length); i++) {
-            int num = i;
-            int temp = 2;
-            // num will give index of element to be marked
-            while (num * temp < sieve.length) {
-                int index = num * temp;
-                // mark
-                sieve[index] = 1;
-                temp++;
+    public void findPrimes(int primes[]){
+        for(int i=2;i<Math.sqrt(primes.length);i++){
+            int num=i;
+            int mult=2;
+            //mark all mutliples of i till primes.length
+            while(num*mult<primes.length){
+                int index=num*mult;
+                primes[index]=1;
+                mult++;
             }
-
         }
-
-        
     }
     public int diagonalPrime(int[][] nums) {
-        
-        //find max among diagonals
-         //now traverse diagonals and check
+        //first find max number in diagonals
         int max=Integer.MIN_VALUE;
-        for(int i=0,j=0;i<nums.length&&j<nums[0].length;i++,j++){
-            int temp=nums[i][j];
-            if(temp>max){
-                max=temp;
+        for(int i=0,j=0;i<nums.length && j<nums[0].length; i++,j++){
+            if(nums[i][j]>max){
+                max=nums[i][j];
             }
         }
-        //traverse reverse diagonal
-        for(int i=0,j=nums[0].length-1;i<nums.length&&j>=0;i++,j--){
-            int temp=nums[i][j];
-            if(temp>max){
-                max=temp;
+        
+        for(int i=0,j=nums[0].length-1;i<nums.length && j>=0;i++,j--){
+            if(nums[i][j]>max){
+                max=nums[i][j];
             }
-            
         }
         
-        
-        
-        int sieve[]=new int[max+1];
-        //since 0 and 1 are neither prime nor composite
-        sieve[0]=1;
-        sieve[1]=1;
-        findAllPrimes(sieve);
+        int primes[]=new int[max+1];
+        primes[0]=1;
+        primes[1]=1;
+        findPrimes(primes);
         int maxPrime=0;
-        //now traverse diagonals and check
-        for(int i=0,j=0;i<nums.length&&j<nums[0].length;i++,j++){
-            int temp=nums[i][j];
-            if(sieve[temp]==0){
-                if(temp>maxPrime){
-                    maxPrime=temp;
-                }
-            }
-        }
-        //traverse reverse diagonal
-        for(int i=0,j=nums[0].length-1;i<nums.length&&j>=0;i++,j--){
-            int temp=nums[i][j];
-            if(sieve[temp]==0){
-                if(temp>maxPrime){
-                    maxPrime=temp;
-                }
-            }
+            
+         for(int i=0,j=0;i<nums.length && j<nums[0].length; i++,j++){
+             int num=nums[i][j];
+             if(primes[num]==0){
+                 if(num>maxPrime){
+                     maxPrime=num;
+                 }
+             }
+             
         }
         
+        for(int i=0,j=nums[0].length-1;i<nums.length && j>=0;i++,j--){
+             int num=nums[i][j];
+             if(primes[num]==0){
+                 if(num>maxPrime){
+                     maxPrime=num;
+                 }
+             }
+        }
         return maxPrime;
     }
 }
