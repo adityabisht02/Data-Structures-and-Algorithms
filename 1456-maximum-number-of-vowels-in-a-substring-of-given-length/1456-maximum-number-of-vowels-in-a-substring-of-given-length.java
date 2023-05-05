@@ -1,4 +1,5 @@
 class Solution {
+    //sliding window technique
     public boolean isVowel(char temp){
         return (temp=='a' || temp=='e' || temp=='i' || temp=='o' || temp=='u');
     }
