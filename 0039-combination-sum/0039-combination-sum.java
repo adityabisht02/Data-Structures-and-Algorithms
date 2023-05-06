@@ -1,26 +1,24 @@
 class Solution {
-    public void comb(int index,int arr[],int target,List<List<Integer>> ans,List<Integer> temp){
-        if(index==arr.length){
-            if(target==0){
-                ans.add(new ArrayList<>(temp));
-                
-            }
-            return ;
+    public void rec(List<List<Integer>> ans,List<Integer> ds,int arr[],int index,int target){
+        if(index>=arr.length){
+           if(target==0){
+               ans.add(new ArrayList<>(ds));
+               
+           }return ;
         }
-        //if sum doesnt exceed target u can add element to list
+       
+        //if less than target we add the element and go further
         if(arr[index]<=target){
-            temp.add(arr[index]);
-            //call it again for same index
-            comb(index,arr,target-arr[index],ans,temp);
-            //remove that index as well
-            temp.remove(temp.size()-1);
+            ds.add(arr[index]);
+            rec(ans,ds,arr,index,target-arr[index]);
+            ds.remove(ds.size()-1);
         }
-        //increment index and take elements in front
-        comb(index+1,arr,target,ans,temp);
+        //arr[index]> target then move on to next element
+        rec(ans,ds,arr,index+1,target);
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans=new ArrayList<>();
-        comb(0,candidates,target,ans,new ArrayList<>());
+        rec(ans,new ArrayList<>(),candidates,0,target);
         
         return ans;
     }
