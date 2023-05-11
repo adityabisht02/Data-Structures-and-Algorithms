@@ -15,44 +15,42 @@
  */
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        if(root==null)return 0;
+        HashMap<TreeNode,Integer> map=new HashMap<>();
         Queue<TreeNode> q=new LinkedList<>();
         q.add(root);
-        HashMap<TreeNode,Integer> map=new HashMap<>();
         map.put(root,0);
         int maxWidth=0;
         
         while(!q.isEmpty()){
-            //get size of the current level
             int size=q.size();
-            int leftMostIndex=0,rightMostIndex=0;
+            int leftIndex=0,rightIndex=0;
             for(int i=0;i<size;i++){
-                TreeNode current=q.poll();
-                int index=map.get(current);
-                if(current.left!=null){
-                    q.add(current.left);
-                    int leftChildIndex=(2*index)+1-1;
-                    map.put(current.left,leftChildIndex);
-                    
+                 TreeNode currentNode=q.poll();
+          
+            int index=map.get(currentNode);
+                if(currentNode.left!=null){
+                      int leftChildIndex=(2*index)+1-1;
+                    q.add(currentNode.left);
+                    map.put(currentNode.left,leftChildIndex);
                 }
-                if(current.right!=null){
-                    q.add(current.right);
-                    int rightChildIndex=(2*index)+2-1;
-                    map.put(current.right,rightChildIndex);
-                    
+               if(currentNode.right!=null){
+                      int rightChildIndex=(2*index)+2-1;
+                    q.add(currentNode.right);
+                    map.put(currentNode.right,rightChildIndex);
                 }
+                
                 if(i==0){
-                    leftMostIndex=index;
+                    leftIndex=index;
                 }
                 if(i==size-1){
-                    rightMostIndex=index;
+                    rightIndex=index;
                 }
-              
+                
             }
-              if(rightMostIndex-leftMostIndex+1>maxWidth){
-                    maxWidth=rightMostIndex-leftMostIndex+1;
-                }
+            maxWidth=Math.max(maxWidth,rightIndex-leftIndex+1);
+           
         }
+        
         return maxWidth;
     }
 }
