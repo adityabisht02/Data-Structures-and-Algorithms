@@ -1,54 +1,51 @@
 class Solution {
-    public int colorNode(int adjcolor){
-        if(adjcolor==0){
-            return 1;
+    public int getColor(int color){
+        if(color==1){
+            return 2;
         }
-        return 0;
+        return 1;
     }
-    
-    public boolean check(int graph[][],int node,int visited[]){
+    public boolean bfs(int graph[][],int node,int visited[]){
         Queue<Integer> q=new LinkedList<>();
         q.add(node);
+        if(visited[node]==0){
+            visited[node]=1;
+        }
         
         while(!q.isEmpty()){
-            int parent=q.poll();
-            int adjcolor=visited[parent];
-            
-            for(int i=0;i<graph[parent].length;i++){
-                int element=graph[parent][i];
-                //if node not visited then color it
-                if(visited[element]==-1){
-                    q.add(element);
-                    int color=colorNode(adjcolor);
-                    visited[element]=color;
+            int current=q.poll();
+            int currentcolor=visited[current];
+            //add children
+            for(int i=0;i<graph[current].length;i++){
+                int adjacent=graph[current][i];
+                if(visited[adjacent]==0){
+                    int color=getColor(currentcolor);
+                    q.add(adjacent);
+                    visited[adjacent]=color;
                 }
-                //if both have same color return false
-                else if(visited[element]==adjcolor){
-                    return false;
+                //else if not 0 then chevk color
+                else{
+                    if(visited[adjacent]==currentcolor){
+                        return false;
+                    }
                 }
             }
         }
-    return true;
+        return true;
     }
     public boolean isBipartite(int[][] graph) {
-        int visited[]=new int[graph.length];
-        //mark all elements in visited -1
-        for(int i=0;i<visited.length;i++){
-            visited[i]=-1;
-        }
-       
         
+        int visited[]=new int[graph.length];
+        //color the 0th node
+   
         for(int i=0;i<graph.length;i++){
-            //if not colored color this node
-            if(visited[i]==-1){
-                visited[i]=0;
-            }
-            boolean result =check(graph,i,visited); 
-            if(result==false){
+            boolean res=bfs(graph,i,visited);
+            if(!res){
                 return false;
             }
         }
         
         return true;
+        
     }
 }
