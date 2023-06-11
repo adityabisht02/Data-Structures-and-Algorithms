@@ -11,33 +11,25 @@
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<Integer> pq=new PriorityQueue<>();
-        ListNode ptr=null;
         
         for(int i=0;i<lists.length;i++){
-             ptr=lists[i];
-            
-            //loop through lists[i] and add all elements to heap
-            while(ptr!=null){
-                pq.add(ptr.val);
-                ptr=ptr.next;
+            ListNode head=lists[i];
+            //traverse the list
+            while(head!=null){
+                pq.add(head.val);
+                head=head.next;
             }
         }
         
-        //if minheap empty return null list
-        if(pq.isEmpty()){
-            return null;
-        }
-        ListNode start=new ListNode();
-        ptr=start;
-        
-        //poll minheap elements and create a new list
+        //now use the heap to create a merged list
+        ListNode start=new ListNode(0);
+        ListNode ptr=start;
         while(!pq.isEmpty()){
-            ListNode newnode=new ListNode(pq.poll());
-            start.next=newnode;
-            start=start.next;
+            int temp=pq.poll();
+            ListNode newnode=new ListNode(temp);
+            ptr.next=newnode;
+            ptr=ptr.next;
         }
-        
-        return ptr.next;
-        
+        return start.next;
     }
 }
