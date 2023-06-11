@@ -5,9 +5,7 @@ class Solution {
         
         for(int i=2;i<=Math.sqrt(n);i++){
             //if number is composite,dont use it to mark
-            if(sieve[i]==1){
-                continue;
-            }
+          
             for(int j=2;i*j<n;j++){
                 int markingIndex=i*j;
                 sieve[markingIndex]=1;
