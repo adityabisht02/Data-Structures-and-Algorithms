@@ -38,14 +38,14 @@ class Solution {
         if(visited[src]==1){
             return true;
         }
-        
+     
         visited[src]=1;
         ArrayList<Integer> children=adj.get(src);
         for(int i=0;i<children.size();i++){
             int child=children.get(i);
-            if(child==previousParent){
-                continue;
-            }
+         if(child==previousParent){
+             continue;
+         }
             boolean res=dfs(adj,visited,child,src);
             if(res){
                 return true;
