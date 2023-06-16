@@ -33,42 +33,26 @@ class GFG {
 
 
 class Solution {
-    class Pair{
-        int node;
-        int previousParent;
-        Pair(int node,int pp){
-            this.node=node;
-            previousParent=pp;
-        }
-    }
-  
     
-    public boolean bfs(ArrayList<ArrayList<Integer>> adj,int visited[],int src){
-        Queue<Pair> q=new LinkedList<>();
-        //keep pp as -1 at start
-        q.add(new Pair(src,-1)); 
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj,int visited[],int src,int previousParent){
+        if(visited[src]==1){
+            return true;
+        }
+        
         visited[src]=1;
-        while(!q.isEmpty()){
-            Pair currentNode=q.poll();
-            int current=currentNode.node;
-            int previousParent=currentNode.previousParent;
-            ArrayList<Integer> children=adj.get(current);
-            for(int i=0;i<children.size();i++){
-                int child=children.get(i);
-                //if child not visited add it to queue
-                if(visited[child]!=1){
-                    q.add(new Pair(child,current));
-                    visited[child]=1;
-                }
-                //if visited and not parent
-                else{
-                    if(child!=previousParent){
-                        return true;
-                    }
-                }
+        ArrayList<Integer> children=adj.get(src);
+        for(int i=0;i<children.size();i++){
+            int child=children.get(i);
+            if(child==previousParent){
+                continue;
+            }
+            boolean res=dfs(adj,visited,child,src);
+            if(res){
+                return true;
             }
         }
-        return false; 
+        return false;
+        
     }
     // Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
@@ -77,7 +61,7 @@ class Solution {
         //check all connected components
         for(int i=0;i<V;i++){
             if(visited[i]!=1){
-                boolean res=bfs(adj,visited,i);
+                boolean res=dfs(adj,visited,i,-1);
                  if(res){
                 return true;
             }
