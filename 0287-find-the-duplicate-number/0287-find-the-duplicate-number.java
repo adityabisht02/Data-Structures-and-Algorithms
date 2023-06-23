@@ -1,13 +1,13 @@
 class Solution {
     public int findDuplicate(int[] nums) {
+        
         for(int i=0;i<nums.length;i++){
-            int num=Math.abs(nums[i]);
-            //if element is marked, return element else mark element as visited
-            if(nums[num]<0){
-                return num;
+            int markingIndex=Math.abs(nums[i]);
+            if(nums[markingIndex]<0){
+                return markingIndex;
             }
             else{
-                nums[num]=-nums[num];
+                nums[markingIndex]=-nums[markingIndex];
             }
         }
         
