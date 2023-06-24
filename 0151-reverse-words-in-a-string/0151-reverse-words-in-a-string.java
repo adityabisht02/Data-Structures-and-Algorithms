@@ -1,15 +1,50 @@
 class Solution {
     public String reverseWords(String s) {
-        s=s.trim();
-        String arr[]=s.split(" +");
-        
-        String ans="";
-        for(int i=arr.length-1;i>=0;i--){
-            ans=ans+arr[i];
-            if(i!=0){
-                ans=ans+" ";
+        Stack<String> stack=new Stack();
+        String word="";
+        int wordStart=-1;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)==' '){
+                if(wordStart!=-1){
+                    stack.push(word);
+                    word="";
+                    wordStart=-1;
+                }
+            }
+            else if(i==s.length()-1){
+                if(wordStart!=-1){
+                    word=word+s.charAt(i);
+                    stack.push(word);
+                }
+                else{
+                    if(s.charAt(i)!=' '){
+                        word=word+s.charAt(i);
+                        stack.push(word);
+                    }
+                }
+            }
+            else{
+                //if character 
+                if(s.charAt(i)!=' '){
+                    //if new word is starting
+                    if(wordStart==-1){
+                        wordStart=i;
+                        word=word+s.charAt(i);
+                    }
+                    //if word has already started
+                    else{
+                        word=word+s.charAt(i);
+                    }
+                }
             }
         }
-        return ans;
+        
+        String ans="";
+        while(!stack.isEmpty()){
+            String temp=stack.pop();
+            ans=ans+temp;
+            ans=ans+" ";
+        }
+        return ans.trim();
     }
 }
