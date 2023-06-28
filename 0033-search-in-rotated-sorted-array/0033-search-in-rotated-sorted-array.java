@@ -3,37 +3,31 @@ class Solution {
         int low=0,high=nums.length-1;
         
         while(low<=high){
-            int mid=(low+high)/2;
-            //if mid is target
+            int mid= (high-low)/2+low;
+            
             if(nums[mid]==target){
                 return mid;
             }
-            
-            //if left half sorted
-            if(nums[low]<=nums[mid]){
-                //if target is contained in this half
-                if(target>=nums[low] && target<=nums[mid]){
-                    high=mid-1; //since mid is already checked
+            //check if left part is sorted
+            else if(nums[low]<=nums[mid]){
+                //checkif target lies here
+                if(target>=nums[low] && target<nums[mid]){
+                    high=mid-1;
                 }
-                //else target is in other part
                 else{
                     low=mid+1;
                 }
             }
-            
-            //if right part sorted
+            //else right part is sorted
             else{
-                //if target contained in right part
-                if(target>=nums[mid] && target<=nums[high]){
+                if(target>nums[mid] && target<=nums[high]){
                     low=mid+1;
                 }
-                //target not contained
                 else{
                     high=mid-1;
                 }
             }
         }
-        
         return -1;
     }
 }
