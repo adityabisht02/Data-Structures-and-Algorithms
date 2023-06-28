@@ -3,31 +3,28 @@ class Solution {
         int low=0,high=nums.length-1;
         
         while(low<=high){
-            int mid=(low+high)/2;
-             if(nums[mid]==target){
-                return true;   
-            }  
-            //check special condition
-            else if(nums[mid]==nums[low] && nums[mid]==nums[high]){
-                //means we can shrink the array
+            int mid= (high-low)/2+low;
+            
+            if(nums[mid]==target){
+                return true;
+            }
+            else if(nums[low]==nums[mid] && nums[mid]==nums[high]){
                 low++;
                 high--;
             }
-                
-            //if left part sorted
+            //check if left part is sorted
             else if(nums[low]<=nums[mid]){
-                //if target contained
-                if(target>=nums[low] && target<=nums[mid]){
+                //checkif target lies here
+                if(target>=nums[low] && target<nums[mid]){
                     high=mid-1;
                 }
-                //if target not in left part
                 else{
                     low=mid+1;
                 }
             }
-            //if right part sorted
+            //else right part is sorted
             else{
-                if(target<=nums[high] && target>=nums[mid]){
+                if(target>nums[mid] && target<=nums[high]){
                     low=mid+1;
                 }
                 else{
@@ -35,8 +32,6 @@ class Solution {
                 }
             }
         }
-        
         return false;
-        
     }
 }
