@@ -6,9 +6,16 @@ class Solution {
         
         while(low<=high){
             int mid=(high-low)/2+low;
+            if(nums[low]==nums[mid] && nums[mid]==nums[high]){
+                if(nums[mid]<min){
+                    min=nums[mid];
+                }
+                low++;
+                high--;
+            }
             
             //check which half is sorted
-            if(nums[low]<=nums[mid]){
+            else if(nums[low]<=nums[mid]){
                 //if left half sorted low would give the min from left half
                 if(nums[low]<min){
                     min=nums[low];
