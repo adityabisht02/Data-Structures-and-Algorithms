@@ -37,14 +37,58 @@ public class Main {
 
 class Solution {
     int count(int[] arr, int n, int x) {
-        // code here
-        int count=0;
-        for(int i=0;i<n;i++){
-            if(arr[i]==x){
-                count++;
+        
+       //find first and last occurence
+        int low=0,high=n-1;
+        int firstOcc=-1;
+        while(low<=high){
+            int mid=(high-low)/2+low;
+            if(arr[mid]==x){
+                firstOcc=mid;
+                high=mid-1;
+            }
+            else if(x<arr[mid]){
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
             }
         }
         
-        return count;
+        int lastOcc=-1;
+        low=0;
+        high=n-1;
+        
+        while(low<=high){
+            int mid=(high-low)/2+low;
+            if(arr[mid]==x){
+                lastOcc=mid;
+                low=mid+1;
+            }
+            else if(x>arr[mid]){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        if(firstOcc==-1){
+            if(lastOcc==-1){
+                return 0;
+            }
+            else{
+                return 1;
+            }
+        }
+        if(lastOcc==-1){
+            if(firstOcc==-1){
+                return 0;
+            }
+            else{
+                return 1;
+            }
+        }
+        
+        return (lastOcc-firstOcc+1);
     }
 }
