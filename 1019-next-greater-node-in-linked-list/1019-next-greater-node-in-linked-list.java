@@ -27,39 +27,35 @@ class Solution {
             ptr=ptr.next;
         }
     }
-    class Pair{
-        int val;
-        int index;
-        Pair(int v,int i){
-            val=v;
-            index=i;
-        }
-    }
+  
     public int[] nextLargerNodes(ListNode head) {
         int n=countNodes(head);
         int arr[]=new int[n];
         fill(head,arr);
-        Stack<Pair> s=new Stack();
-        int ans[]=new int[n];
-        for(int i=0;i<arr.length;i++){
-            if(s.isEmpty()){
-                s.push(new Pair(arr[i],i));
+       int ans[]=new int[n];
+        Stack<Integer> s=new Stack();
+        
+        for(int i=arr.length-1;i>=0;i--){
+             if(i==arr.length-1){
+                 ans[i]=0;
+                 s.push(arr[i]);
+             }
+           else if(s.isEmpty()){
+                s.push(arr[i]);
             }
             else{
-                while(!s.isEmpty() && s.peek().val<arr[i]){
-                    Pair temp=s.pop();
-                    ans[temp.index]=arr[i];
+                while(!s.isEmpty() && s.peek()<=arr[i]){
+                    s.pop();
                 }
-                s.push(new Pair(arr[i],i));
+                if(s.isEmpty()){
+                    ans[i]=0;
+                }
+                else{
+                    ans[i]=s.peek();
+                }
+                s.push(arr[i]);
             }
-            
-        }
-        //now empty the stack and mark the rwmaining elements
-        while(!s.isEmpty()){
-            Pair temp=s.pop();
-            ans[temp.index]=0;
         }
         return ans;
-        
     }
 }
