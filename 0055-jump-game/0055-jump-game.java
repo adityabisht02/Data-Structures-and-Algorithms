@@ -1,29 +1,18 @@
 class Solution {
-    public boolean rec(int nums[],int index,int dp[]){
-        if(index>=nums.length-1){
-            return true;
-        }
-        if(dp[index]!=-1){
-            if(dp[index]==1){
-                return true;
+    public boolean canJump(int[] nums) {
+        int minJumpCount=1;
+        
+        for(int i=nums.length-2;i>=0;i--){
+            if(nums[i]<minJumpCount){
+                minJumpCount++;
             }
+            else if(nums[i]>=minJumpCount){
+                minJumpCount=1;
+            }
+        }
+        if(minJumpCount>1){
             return false;
         }
-        int length=nums[index];
-        
-        for(int i=1;i<=length;i++){
-            boolean res=rec(nums,index+i,dp);
-            if(res){
-                dp[index]=1;
-                return true;
-            }
-        }
-        dp[index]=0;
-        return false;
-    }
-    public boolean canJump(int[] nums) {
-        int dp[]=new int[nums.length];
-        Arrays.fill(dp,-1);
-        return rec(nums,0,dp);
+        return true;
     }
 }
