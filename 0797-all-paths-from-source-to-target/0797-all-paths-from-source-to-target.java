@@ -1,19 +1,22 @@
 class Solution {
-    public void dfs(int graph[][],List<List<Integer>> paths,List<Integer> path,int node){
-        path.add(node);
-        
-        if(node==graph.length-1){
-            paths.add(path);
+    public void dfs(int graph[][],List<List<Integer>> ans,int visited[],int src,List<Integer> path){
+        if(src==graph.length-1){
+            path.add(src);
+            ans.add(new ArrayList<>(path));
             return ;
         }
-        for(int i=0;i<graph[node].length;i++){
-            dfs(graph,paths,new ArrayList(path),graph[node][i]);
+        path.add(src);
+        int children[]=graph[src];
+        for(int i=0;i<children.length;i++){
+            dfs(graph,ans,visited,children[i],new ArrayList<>(path));
         }
+        
     }
-    
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
-        List<List<Integer>> paths= new ArrayList<>();
-        dfs(graph,paths,new ArrayList<>(),0);
-            return paths;
+        List<List<Integer>> ans=new ArrayList<>();
+        int visited[]=new int[graph.length];;
+        dfs(graph,ans,visited,0,new ArrayList<>());
+        
+        return ans;
     }
 }
