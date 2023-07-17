@@ -12,29 +12,28 @@
  *         this.right = right;
  *     }
  * }
- */ 
+ */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> ans=new ArrayList<>();
         if(root==null){
-            return ans;
+            return new ArrayList<>();
         }
+     List<Integer> ans=new ArrayList<>();
         Stack<TreeNode> s=new Stack();
-        
-        while(true){
-            if(root!=null){
-                s.push(root);
-                root=root.left;
-            }
-            else{
-                if(s.isEmpty()){
-                    break;
-                }
-                root=s.pop();
-                ans.add(root.val);
-                root=root.right;
-            }
+    while(true){
+        if(root!=null){
+            s.push(root);
+            root=root.left;
         }
+        else{
+            if(s.isEmpty()){
+                break;
+            }
+            root=s.pop();
+            ans.add(root.val);
+            root=root.right;
+        }
+    }
         return ans;
     }
 }
