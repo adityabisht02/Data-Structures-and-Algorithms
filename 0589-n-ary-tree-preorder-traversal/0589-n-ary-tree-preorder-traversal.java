@@ -18,20 +18,21 @@ class Node {
 */
 
 class Solution {
-    public void dfs(List<Integer> ans,Node root){
-        if(root==null){
-            return ;
-        }
-        List<Node> children=root.children;
-        ans.add(root.val);
-        //now traverse childeen
-        for(int i=0;i<children.size();i++){
-            dfs(ans,children.get(i));
-        }
-    }
     public List<Integer> preorder(Node root) {
+        if(root==null){
+            return new ArrayList<>();
+        }
         List<Integer> ans=new ArrayList<>();
-        dfs(ans,root);
+        Stack<Node> s=new Stack();
+        s.push(root);
+        while(!s.isEmpty()){
+            Node current=s.pop();
+            ans.add(current.val);
+            List<Node> children=current.children;
+            for(int i=children.size()-1;i>=0;i--){
+                s.push(children.get(i));
+            }
+        }
         return ans;
     }
 }
