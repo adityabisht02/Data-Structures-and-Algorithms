@@ -1,22 +1,27 @@
 class Solution {
-    public void rec(List<List<Integer>> ans,List<Integer> list, int arr[],int index,int target){
-        if(index>=arr.length || target<=0){
+    public void rec(int arr[],int index,int target,List<Integer> temp,List<List<Integer>> ans){
+        if(index>=arr.length){
             return ;
         }
-        if(arr[index]<=target){
-            list.add(arr[index]);
-            if(arr[index]==target){
-                ans.add(new ArrayList(list));
-            }
-            rec(ans,list,arr,index,target-arr[index]);
-            list.remove(list.size()-1);
+        if(target<0){   
+            return ;
         }
-        rec(ans,list,arr,index+1,target);
+        if(target==0){
+            ans.add(new ArrayList<>(temp));
+            return ;
+        }
+        //take arr[index]
+        temp.add(arr[index]);
+        rec(arr,index,target-arr[index],temp,ans);
+        temp.remove(temp.size()-1);
+        rec(arr,index+1,target,temp,ans);
         
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ans=new ArrayList<>();
-        rec(ans,new ArrayList<>(),candidates,0,target);
-            return ans;
+       List<List<Integer>> ans=new ArrayList<>();
+        
+        rec(candidates,0,target,new ArrayList<>(),ans);
+        return ans;
+            
     }
 }
