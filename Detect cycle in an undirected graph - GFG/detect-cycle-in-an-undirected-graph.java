@@ -35,10 +35,7 @@ class GFG {
 class Solution {
     public boolean hasCycle(ArrayList<ArrayList<Integer>> adj,int node,int vis[],int parent){
         if(vis[node]==1){
-            if(node!=parent){
-                return true;
-            }
-            return false;
+           return true;
         }
         vis[node]=1;
         ArrayList<Integer> children=adj.get(node);
