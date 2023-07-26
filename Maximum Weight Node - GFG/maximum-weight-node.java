@@ -65,18 +65,20 @@ class Solution{
     public int maxWeightCell(int N, int Edge[]){
        int visited[]=new int[N];
        
-       for(int i=0;i<Edge.length;i++){
-            if(Edge[i]!=-1){
-                visited[Edge[i]]+=i;
-            }
+       for(int i=0;i<N;i++){
+           if(Edge[i]!=-1){
+               
+           visited[Edge[i]]+=i;
+           }
+           
        }
-       int max=0,ans=0;
+       int max=0,node=0;
        for(int i=0;i<visited.length;i++){
            if(visited[i]>=max){
                max=visited[i];
-               ans=i;
+               node=i;
            }
        }
-       return ans;
+       return node;
     }
 }
