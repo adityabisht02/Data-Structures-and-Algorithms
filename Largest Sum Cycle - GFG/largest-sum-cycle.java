@@ -58,15 +58,13 @@ class GFG{
 // } Driver Code Ends
 
 
-
-
 //User function Template for Java
 
 class Solution{
     long maxSum=-1;
-    public void hasCycle(int edge[],int visited[],int pathVisited[],int node){
-        if(visited[node]==1){
-            if(pathVisited[node]==1){
+    public void dfs(int edge[],int node,int vis[],int path[]){
+        if(vis[node]==1){
+            if(path[node]==1){
                 int i=node;
                 long sum=0;
                 while(edge[i]!=node){
@@ -74,31 +72,29 @@ class Solution{
                     i=edge[i];
                 }
                 sum+=i;
-                maxSum=Math.max(maxSum,sum);
+                maxSum=Math.max(sum,maxSum);
             }
         }
         else{
-           visited[node]=1;
-        pathVisited[node]=1;
-        
-        if(edge[node]!=-1){
-            hasCycle(edge,visited,pathVisited,edge[node]);
-        } 
+            vis[node]=1;
+            path[node]=1;
+            if(edge[node]!=-1){
+                 dfs(edge,edge[node],vis,path);
+            }
+           
         }
-        
-        pathVisited[node]=0;
-       
+        path[node]=0;
     }
     public long largesSumCycle(int N, int Edge[]){
         int visited[]=new int[N];
+        
         int pathVisited[]=new int[N];
         
         for(int i=0;i<N;i++){
             if(visited[i]!=1){
-                hasCycle(Edge,visited,pathVisited,i);
+                dfs(Edge,i,visited,pathVisited);
             }
         }
-        
         return maxSum;
     }
 }
