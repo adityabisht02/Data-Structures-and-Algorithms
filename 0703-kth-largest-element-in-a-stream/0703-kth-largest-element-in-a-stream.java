@@ -1,34 +1,26 @@
 class KthLargest {
-    //no need to store all array items in heap, store only max k items
-    //on keeping minheap of size k the peek() element will be the ans
-    PriorityQueue<Integer> pq;
     int k;
+    PriorityQueue<Integer> pq;
     public KthLargest(int k, int[] nums) {
-        this.k=k;
         pq=new PriorityQueue<>();
-        Arrays.sort(nums);
-        if(nums.length==0){
-            return;
+        this.k=k;
+        for(int i=0;i<nums.length;i++){
+            pq.add(nums[i]);
         }
-        
-        //put the largest k elements into the heap, no need to add whole array to the heap
-        for(int i:nums){
-            int temp=add(i);
+       
+        for(int i=0;i<nums.length-k;i++){
+            pq.poll();
         }
     }
     
     public int add(int val) {
-        //we have k largest elements, check if val is larger ,if yes then pop top element and push val
         if(pq.size()<k){
             pq.add(val);
         }
         else if(val>pq.peek()){
             pq.poll();
             pq.add(val);
-            return pq.peek();
         }
-        
-        //else return the current k the largest element and dont add val to heap
         return pq.peek();
     }
 }
