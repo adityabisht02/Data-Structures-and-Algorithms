@@ -55,14 +55,14 @@ class Solution {
         
         for(int i=0;i<n;i++){
             int low=0,high=n-1;
-            
             while(low<high){
-               int temp=arr[low][i];
+                int temp=arr[low][i];
                 arr[low][i]=arr[high][i];
-                arr[high][i]=temp; 
+                arr[high][i]=temp;
                 low++;
                 high--;
             }
         }
+        
     }
 }
