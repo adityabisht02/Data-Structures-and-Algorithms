@@ -1,23 +1,36 @@
-public class Solution {
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        if (n == 0) {
-            return nums;
+        int ans[]=new int[nums.length-k+1];
+        if(nums.length==0){
+            return ans;
         }
-        int[] result = new int[n - k + 1];
-        LinkedList<Integer> dq = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            if (!dq.isEmpty() && dq.peek() < i - k + 1) {
-                dq.poll();
+        
+        LinkedList<Integer> list=new LinkedList<>();
+        for(int i=0;i<k;i++){
+            if(list.isEmpty()){
+                list.offer(i);
             }
-            while (!dq.isEmpty() && nums[i] >= nums[dq.peekLast()]) {
-                dq.pollLast();
-            }
-            dq.offer(i);
-            if (i - k + 1 >= 0) {
-                result[i - k + 1] = nums[dq.peek()];
+            else{
+                while(!list.isEmpty() && nums[list.peekLast()]<=nums[i]){
+                    list.pollLast();
+                }
+                list.offer(i);
             }
         }
-        return result;
+        ans[0]=nums[list.peek()];
+        
+        for(int i=k;i<nums.length;i++){
+            if(list.peek()<i-k+1){
+                list.pollFirst();
+            }
+            while(!list.isEmpty() && nums[list.peekLast()]<=nums[i]){
+                list.pollLast();
+            }
+            list.offer(i);
+            ans[i-k+1]=nums[list.peek()];
+        }
+        
+        return ans;
+        
     }
 }
