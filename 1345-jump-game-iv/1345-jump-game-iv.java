@@ -6,7 +6,14 @@ class Solution {
         
         for(int i=0;i<arr.length;i++){
             int temp=arr[i];
-             map.computeIfAbsent(arr[i], v -> new ArrayList()).add(i);
+             if(map.containsKey(temp)){
+                 map.get(temp).add(i);
+             }
+            else{
+                List<Integer> list=new ArrayList<>();
+                list.add(i);
+                map.put(temp,list);
+            }
         }
         q.add(0);
      
@@ -17,29 +24,21 @@ class Solution {
                 if(index==arr.length-1){
                     return ans;
                 }
-                if(index!=0 && map.containsKey(arr[index-1])){
-                   
-                        q.offer(index-1);
-                    
-                    
+                if(index!=0 && map.containsKey(arr[index-1])){                   
+                        q.offer(index-1);                    
                 }
-                if(index!=arr.length-1 && map.containsKey(arr[index+1])){
-                   
-                        q.offer(index+1);
-                     
-                    
+                if(index!=arr.length-1 && map.containsKey(arr[index+1])){                   
+                        q.offer(index+1);                    
                 }
                 if(map.containsKey(arr[index])){
                    List<Integer> sameVals=map.get(arr[index]);
                 for(int i=0;i<sameVals.size();i++){
                     int tempIndex=sameVals.get(i);
                     if(tempIndex!=index && map.containsKey(arr[index])) {
-                        q.offer(tempIndex);
-                       
+                        q.offer(tempIndex);                       
                     }
                 } 
-                }
-                
+                }                
                 map.remove(arr[index]);
             }
             ans++;
