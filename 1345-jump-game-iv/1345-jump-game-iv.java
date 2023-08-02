@@ -2,8 +2,7 @@ class Solution {
     public int minJumps(int[] arr) {
          HashMap<Integer,List<Integer>> map=new HashMap<>();
         int ans=0;
-        Queue<Integer> q=new LinkedList<>();
-        
+        Queue<Integer> q=new LinkedList<>();        
         for(int i=0;i<arr.length;i++){
             int temp=arr[i];
              if(map.containsKey(temp)){
@@ -34,7 +33,7 @@ class Solution {
                    List<Integer> sameVals=map.get(arr[index]);
                 for(int i=0;i<sameVals.size();i++){
                     int tempIndex=sameVals.get(i);
-                    if(tempIndex!=index && map.containsKey(arr[index])) {
+                    if(tempIndex!=index) {
                         q.offer(tempIndex);                       
                     }
                 } 
