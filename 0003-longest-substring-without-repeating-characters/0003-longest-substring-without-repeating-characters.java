@@ -8,8 +8,8 @@ class Solution {
                 high++;
             }
             else{
-                if(high-low>count){
-                    count=high-low;
+                if(map.size()>count){
+                    count=map.size();
                 }
                 int index=map.get(s.charAt(high));
                 while(low<=index){
@@ -20,8 +20,8 @@ class Solution {
                 high++;
             }
         }
-        if(high-low>count){
-            count=high-low;
+        if(map.size()>count){
+            count=map.size();
         }
         return count;
     }
