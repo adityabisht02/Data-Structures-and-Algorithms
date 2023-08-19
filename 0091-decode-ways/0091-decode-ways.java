@@ -6,21 +6,24 @@ class Solution {
         if(s.charAt(index)=='0'){
             return 0;
         }
-        if(dp[index]!=0){
+        if(dp[index]!=-1){
             return dp[index];
         }
-        int takeOne=helper(s,index+1,dp);
-        int takeTwo=0;
-        if(index<s.length()-1 && (s.charAt(index)=='1' || s.charAt(index)=='2' && s.charAt(index+1)<'7')){
-            takeTwo=helper(s,index+2,dp);
+        //takeOne
+        int res=helper(s,index+1,dp);
+        //taketwo
+        if(index<s.length()-1 && (s.charAt(index)=='1' || s.charAt(index)=='2'&& s.charAt(index+1)<'7')){
+            res+=helper(s,index+2,dp);
         }
-        return dp[index]=takeOne+takeTwo;
+        return dp[index]=res;
     }
     public int numDecodings(String s) {
         if(s.length()==0){
             return 0;
         }
         int dp[]=new int[s.length()];
+        Arrays.fill(dp,-1);
+        
         return helper(s,0,dp);
     }
 }
