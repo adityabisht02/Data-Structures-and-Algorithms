@@ -4,24 +4,27 @@ class Solution {
             return 0;
         }
         if(nums[index]==0){
-            return dp[index]=-1;
+            return -1;
         }
         if(dp[index]!=0){
             return dp[index];
         }
-        int n=nums[index];
-        int min=Integer.MAX_VALUE;
-        int steps=-1;
-        for(int i=1;i<=n;i++){
-            int result=helper(nums,index+i,dp);
-            if(result!=-1){
-                if(result<min){
-                    min=result;
-                    steps=1+min;
-                }
+        int jump=nums[index];
+        int min=-1 ;
+        for(int i=1;i<=jump;i++){
+            int res=helper(nums,index+i,dp);
+            if(res==-1){
+                continue;
             }
+            if(res<min || min==-1){
+                min=res;
+            }
+           
         }
-        return dp[index]=steps;
+        if(min==-1){
+            return dp[index]=-1;
+        }
+        return dp[index]=1+min;
     }
     public int jump(int[] nums) {
         int dp[]=new int[nums.length];
