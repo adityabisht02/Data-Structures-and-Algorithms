@@ -1,49 +1,51 @@
 class Solution {
     public int minJumps(int[] arr) {
-         HashMap<Integer,List<Integer>> map=new HashMap<>();
-        int ans=0;
-        Queue<Integer> q=new LinkedList<>();        
+        HashMap<Integer,List<Integer>> map=new HashMap<>();
+        
         for(int i=0;i<arr.length;i++){
-            int temp=arr[i];
-             if(map.containsKey(temp)){
-                 map.get(temp).add(i);
-             }
+            if(map.containsKey(arr[i])){
+                map.get(arr[i]).add(i);
+            }
             else{
-                List<Integer> list=new ArrayList<>();
-                list.add(i);
-                map.put(temp,list);
+                List<Integer> temp=new ArrayList<>();
+                temp.add(i);
+                map.put(arr[i],temp);
             }
         }
+        //map also serves as visited array
+        
+        Queue<Integer> q=new LinkedList<>();
         q.add(0);
-     
+        int jumps=0;
         while(!q.isEmpty()){
             int size=q.size();
-            for(int k=0;k<size;k++){
-                int index=q.poll();
+            for(int i=0;i<size;i++){
+               int index=q.poll();
                 if(index==arr.length-1){
-                    return ans;
+                    return jumps;
                 }
-                if(index!=0 && map.containsKey(arr[index-1])){                   
-                        q.offer(index-1);                    
+                //add index+1
+                if(index!=arr.length-1 && map.containsKey(arr[index+1])){
+                    q.add(index+1);
                 }
-                if(index!=arr.length-1 && map.containsKey(arr[index+1])){                   
-                        q.offer(index+1);                    
+                if(index!=0 && map.containsKey(arr[index-1])){
+                    q.add(index-1);
                 }
                 if(map.containsKey(arr[index])){
-                   List<Integer> sameVals=map.get(arr[index]);
-                for(int i=0;i<sameVals.size();i++){
-                    int tempIndex=sameVals.get(i);
-                    if(tempIndex!=index) {
-                        q.offer(tempIndex);                       
+                    List<Integer> indexes=map.get(arr[index]);
+                    for(Integer j:indexes){
+                        if(j!=index){
+                            q.add(j);
+                        }
                     }
-                } 
-                }                
-                map.remove(arr[index]);
+                   
+                }
+                 map.remove(arr[index]);
             }
-            ans++;
             
+            
+            jumps++;
         }
-        return ans;
-        
+        return jumps;
     }
 }
