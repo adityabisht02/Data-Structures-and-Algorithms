@@ -1,5 +1,5 @@
 class Solution {
-    public int helper(int n,int dp[]){
+    public int rec(int n,int dp[]){
         if(n<=1){
             return 1;
         }
@@ -8,12 +8,12 @@ class Solution {
         }
         int ans=0;
         for(int i=1;i<=n;i++){
-            ans+=helper(i-1,dp)*helper(n-i,dp);
+            ans+=rec(i-1,dp)*rec(n-i,dp);
         }
         return dp[n]=ans;
     }
     public int numTrees(int n) {
         int dp[]=new int[n+1];
-        return helper(n,dp);
+        return rec(n,dp);
     }
 }
