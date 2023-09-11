@@ -9,13 +9,15 @@ var twoSum = function(nums, target) {
    
     for(let i=0;i<nums.length;i++){
         if(target-nums[i] in map){
-            
-            return [map[target-nums[i]],i];
+            ans.push(map[target-nums[i]])
+            ans.push(i)
+       //     return [map[target-nums[i]],i];
+            break
         }
         else{
       
             map[nums[i]]=i
         }
     }
-    return [];
+    return ans
 };
