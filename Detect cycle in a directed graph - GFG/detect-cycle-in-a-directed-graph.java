@@ -32,36 +32,39 @@ class DriverClass {
 /*Complete the function below*/
 
 class Solution {
-    public boolean hasCycle(ArrayList<ArrayList<Integer>> adj,int visited[],int pathVisited[],int node){
-        if(visited[node]==1){
-            if(pathVisited[node]==1){
-                return true;
-            }
-            return false;
-        }
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj,int visited[],int path[],int node){
         visited[node]=1;
-        pathVisited[node]=1;
-        ArrayList<Integer> children=adj.get(node);
+        path[node]=1;
+        
+        ArrayList<Integer> children =adj.get(node);
         for(int i=0;i<children.size();i++){
             int child=children.get(i);
-            if(hasCycle(adj,visited,pathVisited,child)){
+            if(visited[child]==1 && path[child]==1){
                 return true;
             }
-        }
-        pathVisited[node]=0;
-        return false;
-    }
-    // Function to detect cycle in a directed graph.
-    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
-        // code here
-        int visited[]=new int[V];
-        int pathVisited[]=new int[V];
-        for(int i=0;i<V;i++){
-            if(visited[i]!=1){
-                if(hasCycle(adj,visited,pathVisited,i)){
+            
+            if(visited[child]==0){
+                boolean res=dfs(adj,visited,path,child);
+                if(res){
                     return true;
                 }
             }
+        }
+        path[node]=0;
+        return false;
+    }
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        
+        int visited[]=new int[V];
+        
+        for(int i=0;i<V;i++){
+            if(visited[i]!=1){
+                boolean res=dfs(adj,visited,new int[V],i);
+                if(res){
+                    return true;
+                }
+            }
+            
         }
         return false;
     }
