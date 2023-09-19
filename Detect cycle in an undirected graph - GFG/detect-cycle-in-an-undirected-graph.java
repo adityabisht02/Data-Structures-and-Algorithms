@@ -33,30 +33,32 @@ class GFG {
 
 
 class Solution {
-    public boolean hasCycle(ArrayList<ArrayList<Integer>> adj,int node,int vis[],int parent){
-        if(vis[node]==1){
-           return true;
-        }
-        vis[node]=1;
+    // Function to detect cycle in an undirected graph.
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj,int visited[],int node,int parent){
+        visited[node]=1;
+        
         ArrayList<Integer> children=adj.get(node);
         for(int i=0;i<children.size();i++){
             int child=children.get(i);
-            if(child!=parent){
-                 if(hasCycle(adj,child,vis,node)){
+            if(visited[child]==1 && child!=parent){
                 return true;
             }
+            if(visited[child]!=1){
+                boolean res=dfs(adj,visited,child,node);
+                if(res){
+                    return res;
+                }
             }
-           
         }
-        
         return false;
     }
-    // Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         int visited[]=new int[V];
+        
         for(int i=0;i<V;i++){
-            if(visited[i]!=1){
-                if(hasCycle(adj,i,visited,-1)){
+            if(visited[i]==0){
+                boolean res=dfs(adj,visited,i,-1);
+                if(res){
                     return true;
                 }
             }
