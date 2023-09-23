@@ -128,48 +128,54 @@ class Solution
 {
     //Function to return a list of nodes visible from the top view 
     //from left to right in Binary Tree.
-    static class Element{
+    static class obj{
         Node node;
         int level;
-        Element(Node node,int level){
+        obj(Node node,int lvl){
             this.node=node;
-            this.level=level;
+            level=lvl;
         }
     }
-    static ArrayList<Integer> topView(Node A)
-    {
-          Map<Integer,ArrayList<Integer>> map=new TreeMap<>();
+    static ArrayList<Integer> topView(Node root)
+    {   
         ArrayList<Integer> ans=new ArrayList<>();
-        if(A==null){
+        if(root==null){
             return ans;
         }
-        Queue<Element> q=new LinkedList<>();
-        q.add(new Element(A,0));
+        Map<Integer,List<Integer>> map=new TreeMap<>();
+        Queue<obj> q=new LinkedList<>();
+        q.add(new obj(root,0));
+        List<Integer> temp=new ArrayList<>();
+        temp.add(root.data);
+        map.put(0,temp);
+        
         while(!q.isEmpty()){
-            Element current=q.poll();
-            Node currentNode=current.node;
-            int currentlevel=current.level;
-            if(map.containsKey(currentlevel)){
-                map.get(currentlevel).add(currentNode.data);
+            obj current=q.poll();
+            if(map.containsKey(current.level)){
+                List<Integer> list=map.get(current.level);
+                list.add(current.node.data);
             }
             else{
-                ArrayList<Integer> lvl=new ArrayList<>();
-                lvl.add(currentNode.data);
-                map.put(currentlevel,lvl);
+                List<Integer> list=new ArrayList<>();
+                list.add(current.node.data);
+                map.put(current.level,list);
             }
-            //add children
-            if(currentNode.left!=null){
-                q.add(new Element(currentNode.left,currentlevel-1));
+            
+            if(current.node.left!=null){
+                q.add(new obj(current.node.left,current.level-1));
             }
-            if(currentNode.right!=null){
-                q.add(new Element(currentNode.right,currentlevel+1));
+            if(current.node.right!=null){
+                q.add(new obj(current.node.right,current.level+1));
             }
+            
         }
-        for(Map.Entry<Integer,ArrayList<Integer>> entry: map.entrySet()){
-            ArrayList<Integer> temp=entry.getValue();
-            ans.add(temp.get(0));
+        for(Map.Entry<Integer,List<Integer>> entry:map.entrySet()){
+            int top=entry.getValue().get(0);
+            ans.add(top);
         }
+        
         return ans;
+        
         
     }
 }
