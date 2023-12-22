@@ -37,16 +37,15 @@ class Solution{
             return dp[i][j];
         }
         int min=Integer.MAX_VALUE;
-        //k will partition then recursively partition further
-        for(int k=i;k<=j-1;k++){
-            int steps=helper(arr,i,k,dp)+helper(arr,k+1,j,dp)+(arr[i-1]*arr[j]*arr[k]);
-            min=Math.min(min,steps);
+        
+        for(int k=i;k<j;k++){
+            int multiplications=(arr[i-1]*arr[j]*arr[k])+helper(arr,i,k,dp)+helper(arr,k+1,j,dp);
+            min=Math.min(min,multiplications);
         }
         return dp[i][j]=min;
     }
     static int matrixMultiplication(int N, int arr[])
-    {   
-        int dp[][]=new int[N][N];
+    {   int dp[][]=new int[N][N];
         return helper(arr,1,arr.length-1,dp);
     }
 }
