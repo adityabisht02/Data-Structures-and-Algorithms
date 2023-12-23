@@ -111,56 +111,53 @@ class GfG {
 
 
 class Solution
-    
 {
-    static class Pair{
-        int column;
+    static class obj{
         Node node;
-        Pair(int column,Node node){
-            this.column=column;
+        int col;
+        obj(Node node,int col){
             this.node=node;
+            this.col=col;
         }
     }
-    //Function to find the vertical order traversal of Binary Tree.
+    
     static ArrayList <Integer> verticalOrder(Node root)
     {
-        Map<Integer,List<Integer>> map=new TreeMap<>();
-        
-        Queue<Pair> q=new LinkedList<>();
-        q.add(new Pair(0,root));
-        
-        while(!q.isEmpty()){
-            Pair current=q.poll();
-            int currentcolumn=current.column;
-            Node currentnode=current.node;
-            if(map.containsKey(currentcolumn)){
-                map.get(currentcolumn).add(currentnode.data);
-            }else{
-                List<Integer> list=new ArrayList<>();
-                list.add(currentnode.data);
-                map.put(currentcolumn,list);
-            }
-            
-            if(currentnode.left!=null){
-                Pair p=new Pair(currentcolumn-1,currentnode.left);
-                q.add(p);
-            }
-            if(currentnode.right!=null){
-                Pair p=new Pair(currentcolumn+1,currentnode.right);
-                q.add(p);
-            }
-        }
-        
-        ArrayList<Integer> ans=new ArrayList<>();
-        
-        for(Map.Entry<Integer,List<Integer>> entry: map.entrySet()){
-            List<Integer> list=entry.getValue();
-            
-            for(int i=0;i<list.size();i++){
-                ans.add(list.get(i));
-            }
-        }
-        
-        return ans;
+       Map<Integer,List<Integer>> map=new TreeMap<>();
+       
+       Queue<obj> q=new LinkedList<>();
+       q.add(new obj(root,0));
+       
+       while(!q.isEmpty()){
+           obj current=q.poll();
+           int col=current.col;
+           Node node=current.node;
+           
+           if(map.containsKey(col)){
+              map.get(col).add(node.data);
+               
+           }
+           else{
+               List<Integer> temp=new ArrayList<>();
+               temp.add(node.data);
+               map.put(col,temp);
+           }
+           
+           if(node.left!=null){
+               q.add(new obj(node.left,col-1));
+           }
+           if(node.right!=null){
+               q.add(new obj(node.right,col+1));
+           }
+       }
+       ArrayList<Integer> ans=new ArrayList<>();
+       
+       for(Map.Entry<Integer,List<Integer>> entry:map.entrySet()){
+           List<Integer> temp=entry.getValue();
+           for(int i:temp){
+               ans.add(i);
+           }
+       }
+       return ans;
     }
 }
