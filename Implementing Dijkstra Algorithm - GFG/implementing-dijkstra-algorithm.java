@@ -57,14 +57,12 @@ class DriverClass
 
 class Solution
 {
-    //Function to find the shortest distance of all the vertices
-    //from the source vertex S.
     static class Node implements Comparable<Node>{
         int node;
         int dist;
-        Node(int node,int dist){
-            this.node=node;
-            this.dist=dist;
+        Node(int n,int d){
+            node=n;
+            dist=d;
         }
         public int compareTo(Node temp){
             return (this.dist-temp.dist);
@@ -72,34 +70,39 @@ class Solution
     }
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
     {
+        int distances[]=new int[V];
         int visited[]=new int[V];
-        int distance[]=new int[V];
-        Arrays.fill(distance,Integer.MAX_VALUE);
+        
+        Arrays.fill(distances,Integer.MAX_VALUE);
+        
         PriorityQueue<Node> pq=new PriorityQueue<>();
         pq.add(new Node(S,0));
-        distance[S]=0;
+        distances[S]=0;
+        
         while(!pq.isEmpty()){
             Node current=pq.poll();
-            int currentNode=current.node;
-            int distFromSource=current.dist;
-            if(visited[currentNode]==1){
+            int node=current.node;
+            int distanceFromSource=current.dist;
+            if(visited[node]==1){
                 continue;
             }
-            visited[currentNode]=1;
-            ArrayList<ArrayList<Integer>> children=adj.get(currentNode);
+            visited[node]=1;
+            ArrayList<ArrayList<Integer>> children=adj.get(node);
             for(int i=0;i<children.size();i++){
-                ArrayList<Integer> child=children.get(i);
-                if(visited[child.get(0)]!=1){
-                    if(child.get(1)+distFromSource<distance[child.get(0)]){
-                        distance[child.get(0)]=child.get(1)+distFromSource;
-                    }
-                    pq.add(new Node(child.get(0),distance[child.get(0)]));
+                int childNode=children.get(i).get(0);
+                int weight=children.get(i).get(1);
+                if(distanceFromSource+weight<distances[childNode]){
+                    distances[childNode]=distanceFromSource+weight;
+                    pq.add(new Node(childNode,distances[childNode]));
                 }
+                
             }
         }
         
- 
-         return distance;
+        
+        
+        
+        return distances;
     }
 }
 
