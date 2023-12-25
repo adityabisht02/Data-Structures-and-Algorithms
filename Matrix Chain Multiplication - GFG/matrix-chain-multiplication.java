@@ -37,15 +37,16 @@ class Solution{
             return dp[i][j];
         }
         int min=Integer.MAX_VALUE;
-        
         for(int k=i;k<j;k++){
-            int multiplications=(arr[i-1]*arr[j]*arr[k])+helper(arr,i,k,dp)+helper(arr,k+1,j,dp);
-            min=Math.min(min,multiplications);
+            int steps=helper(arr,i,k,dp)+helper(arr,k+1,j,dp)+(arr[i-1]*arr[j]*arr[k]);
+            min=Math.min(steps,min);
         }
         return dp[i][j]=min;
     }
     static int matrixMultiplication(int N, int arr[])
-    {   int dp[][]=new int[N][N];
+    {
+        int dp[][]=new int[N][N];
+        
         return helper(arr,1,arr.length-1,dp);
     }
 }
